@@ -9,11 +9,11 @@ class Car:
 
 
     def display_info(self) -> str:
-        return f'{self.make} | {self.model}'
+        print(f'{self.make} | {self.model}')
 
 
 # car_1 = Car(make='Skoda', model='Octavia')
-# print(car_1.display_info())
+# car_1.display_info()
 
 
 """2) Создайте класс Rectangle, который имеет атрибуты width (ширина) и height (высота). 
@@ -46,17 +46,17 @@ class BankAccount:
         self.owner = owner
 
 
-    def deposit(self, amount) -> str:
+    def deposit(self, amount):
         self.balance += amount
-        return f'{self.balance} | {self.owner}'
+        print(f'{self.balance} | {self.owner}')
 
 
-    def withdraw(self, amount) -> str:
+    def withdraw(self, amount):
         if self.balance >= amount:
             self.balance -= amount
-            return f'{self.balance} | {self.owner}'
+            print('{self.balance} | {self.owner}')
         else:
-            return 'Недостаточный баланс для снятия'
+            raise ValueError('Недостаточный баланс для снятия')
 
 
 # owner_1 = BankAccount(balance=1000, owner='Vasily')
@@ -81,51 +81,51 @@ class Library:
         self.members_with_books = members_with_books
 
 
-    def add_book(self, book: str) -> list:
+    def add_book(self, book: str):
         self.books.append(book)
-        return self.books
+        print(self.books)
 
 
     def remove_book(self, book: str) -> list | str:
         if book in self.books:
             self.books.remove(book)
-            return self.books
+            print(self.books)
         else:
-            return 'Такой книги нет в библиотеке'
+            raise ValueError('Такой книги нет в библиотеке')
 
 
-    def add_member(self, member: str) -> list:
+    def add_member(self, member: str):
         self.members.append(member)
-        return self.members
+        print(self.members)
 
 
-    def remove_member(self, member: str) -> list | str:
+    def remove_member(self, member: str):
         if member in self.members:
             self.members.remove(member)
-            return self.members
+            print(self.members)
         else:
-            return 'Нет такого участника'
+            raise ValueError('Нет такого участника')
 
 
-    def checkout_book(self, book : str, member: str) -> dict | str:
+    def checkout_book(self, book : str, member: str):
         if book not in self.books or member not in self.members:
             print('Нет книги или участника')
             for books in self.members_with_books.values():
                 if book in books:
-                    return 'Книга уже выдана'
+                    raise ValueError('Книга уже выдана')
         self.members_with_books[member] = book
         self.books.remove(book)
-        return self.members_with_books
+        print(self.members_with_books)
 
 
-    def return_book(self, book: str, member: str) -> str | dict:
+    def return_book(self, book: str, member: str):
         if member not in self.members:
-            return 'Нет такого участника'
+            raise ValueError('Нет такого участника')
         if member not in self.members_with_books:
-            return 'Нет такого участника'
+            raise ValueError('Нет такого участника')
         del  self.members_with_books[member]
         self.books.append(book)
-        return self.members_with_books
+        print(self.members_with_books)
 
 
 # library = Library(
@@ -162,7 +162,7 @@ class Participant:
 
 
 class RegistrationSystem:
-    def __init__(self, conference: Conference, participants: list):
+    def __init__(self, conference: Conference, participants: list[Participant]):
         self.conference = conference
         self.participants = participants
 
@@ -174,9 +174,9 @@ class RegistrationSystem:
     def register(self, participant: Participant):
         if self.is_registration_available():
             self.participants.append(participant)
-            return 'Участник успешно зарегистрирован на конференцию'
+            print('Участник успешно зарегистрирован на конференцию')
         else:
-            return 'Нет свободных мест'
+            raise ValueError('Нет свободных мест')
 
 
 # conference_1 = Conference(name='MudrTeam', capacity=2)
@@ -225,25 +225,25 @@ class Bird(Animal):
 
 
 class Shop:
-    def __init__(self, animals: list, budget: float):
+    def __init__(self, animals: list[Animal], budget: float):
         self.animals = animals
         self.budget = budget
 
 
-    def buy_animal(self, animal: Animal) -> list | str:
+    def buy_animal(self, animal: Animal):
         if self.budget >= animal.price:
             self.animals.append(animal.name)
-            return self.animals
+            print(self.animals)
         else:
-            return 'Недостаточный бюджет для покупки животного'
+            raise ValueError('Недостаточный бюджет для покупки животного')
 
 
-    def sell_animal(self, animal: Animal) -> list | str:
+    def sell_animal(self, animal: Animal):
         if animal.name in self.animals:
             self.animals.remove(animal.name)
-            return self.animals
+            print(self.animals)
         else:
-            return 'Такого животного нет в магазине'
+            raise ValueError('Такого животного нет в магазине')
 
 #
 # animal_1 = Animal(name='Кошка', price=100)
